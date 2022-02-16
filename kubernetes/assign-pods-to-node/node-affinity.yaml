@@ -1,0 +1,21 @@
+# kubectl label nodes <your-node-name> cpuOptimised=yes
+# kubectl get nodes --show-labels
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: cpuOptimised
+            operator: In
+            values:
+            - yes            
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
